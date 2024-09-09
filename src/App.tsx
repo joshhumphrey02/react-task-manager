@@ -1,10 +1,29 @@
-import Sidebar from './components/sidebar';
+import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import ErrorPage from './ErrorPage';
+import Layout from './Layout';
+import Home from '@/screens/home';
 
 const App = () => {
+	const router = createBrowserRouter([
+		{
+			path: '/',
+			errorElement: <ErrorPage />,
+			element: <Layout />,
+			children: [
+				{
+					path: '/',
+					element: <Home />,
+				},
+			],
+		},
+	]);
 	return (
-		<div className=" w-full grid grid-cols-[16rem,auto] min-h-screen">
-			<Sidebar />
-		</div>
+		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+			<Toaster position="top-right" reverseOrder={true} />
+			<RouterProvider router={router} />
+		</ThemeProvider>
 	);
 };
 

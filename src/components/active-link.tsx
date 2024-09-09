@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { NavLink } from 'react-router-dom';
 
 interface ActiveLinkProps {
 	link: string;
@@ -15,14 +16,18 @@ const ActiveLink = ({
 }: ActiveLinkProps) => {
 	return (
 		<div className={cn('flex w-full', containerClassName)}>
-			<a
-				href={link}
-				className={cn(
-					'hover:bg-gray-50 py-2 px-3 transition-all flex-1 flex items-center justify-start space-x-2',
-					className
-				)}>
+			<NavLink
+				to={link}
+				className={({ isActive, isPending }) =>
+					cn(
+						'px-2 h-10 w-full items-center flex transition-all justify-between rounded-lg hover:bg-gray-100',
+						isActive ? 'text-primary bg-primary/10 ' : '',
+						isPending ? 'text-primary' : '',
+						className
+					)
+				}>
 				{children}
-			</a>
+			</NavLink>
 		</div>
 	);
 };
